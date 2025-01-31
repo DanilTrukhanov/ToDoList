@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ object|yesno:"Update,Create" }} tag</h1>
+  <form action="" method="post" class="mt-1">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{{ object|yesno:"Update,Create" }}" class="btn btn-primary">
+    <a href="{% url "todo_list:tag-list" %}" class="btn btn-secondary">Cancel</a>
+  </form>
+{% endblock %}
