@@ -1,5 +1,10 @@
+import datetime
+
 from django import forms
+from django.core.exceptions import ValidationError
 from django_flatpickr.widgets import DateTimePickerInput
+from django.utils import timezone
+
 from todo_list.models import Task, Tag
 
 
@@ -27,6 +32,13 @@ class TaskCreationForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False,
     )
+
+    def clean_deadline(self) -> datetime:
+        user_deadline = self.cleaned_data["deadline"]
+        current_time = timezone.now()
+        if user_deadline <= current_time:
+            raise ValidationError(f"Your deadline can't be earlier than {current_time}!")
+        return user_deadline
 
     class Meta:
         model = Task
