@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.http import HttpRequest, HttpResponse
 
 from todo_list.forms import TaskCreationForm
 from todo_list.models import Task, Tag
@@ -49,7 +50,7 @@ class TagDeleteView(DeleteView):
     success_url = reverse_lazy("todo_list:tag-list")
 
 
-def toggle_status(request, pk: int):
+def toggle_status(request: HttpResponse, pk: int) -> HttpRequest:
     task = get_object_or_404(Task, pk=pk)
     task.is_done = not task.is_done
     task.save()
