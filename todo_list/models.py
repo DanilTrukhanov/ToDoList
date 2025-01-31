@@ -7,6 +7,9 @@ class Tag(models.Model):
     def __str__(self) -> str:
         return f"#{self.name}"
 
+    class Meta:
+        ordering = ["name"]
+
 
 class Task(models.Model):
     content = models.TextField()

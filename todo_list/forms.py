@@ -35,8 +35,9 @@ class TaskCreationForm(forms.ModelForm):
 
     def clean_deadline(self) -> datetime:
         user_deadline = self.cleaned_data["deadline"]
+
         current_time = timezone.now()
-        if user_deadline <= current_time:
+        if user_deadline and user_deadline <= current_time:
             raise ValidationError(
                 f"Your deadline can't be earlier than {current_time}!"
             )
