@@ -44,6 +44,11 @@ class TagUpdateView(UpdateView):
     success_url = reverse_lazy("todo_list:tag-list")
 
 
+class TagDeleteView(DeleteView):
+    model = Tag
+    success_url = reverse_lazy("todo_list:tag-list")
+
+
 def toggle_status(request, pk: int):
     task = get_object_or_404(Task, pk=pk)
     task.is_done = not task.is_done
